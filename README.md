@@ -1,13 +1,13 @@
 # Project name
 
-> One-sentence description of what your system does and for whom.
+A collaborative plateform to post pictures of bird to help researchers see where differents species can be seen.
 
 ## Authors
 
 | Name | GitHub | Main responsibilities |
 |------|--------|-----------------------|
-| TODO-AUTHOR | @… | … |
-| TODO-AUTHOR | @… | … |
+| Raphaël Letourneur | @raphltr | Developper |
+| Oïlhan Mercul | @OilhanMercul | Developper |
 
 <!-- Lab repository: one row. Project repository: both team members. -->
 
