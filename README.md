@@ -1,6 +1,6 @@
 # Project name
 
-A collaborative plateform to post pictures of bird to help researchers see where differents species can be seen.
+A collaborative plateform to reference the software alternatives that can manages common task to help people keeping their old devices and reduce e-waste.
 
 ## Authors
 
