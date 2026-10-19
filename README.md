@@ -37,9 +37,9 @@ flowchart LR
 
 | Part | Technology |
 |------|------------|
-| Backend | … |
-| Web front end | … |
-| Database | … |
+| Backend | Node.js/Express+Prisma |
+| Web front end | React/Vite |
+| Database | PostgreSQL |
 | Mobile | … |
 | Cloud | … |
 | LLM provider | … |
