@@ -20,15 +20,15 @@ Create a GitHub issue for each story (use the "User story" issue template) and l
 
 | # | Story | Priority | Milestone | Issue |
 |---|-------|----------|-----------|-------|
-| 1 | As a visitor, I want to search for approved software alternatives filtered by devices or tasks, so that I can find a solution compatible with my needs. | Must | midterm | #… |
-| 2 | As a user, I want to create an account and log in, so that I can contribute content and ratings. | Must | midterm | #… |
-| 3 | As a user, I want to submit a software alternative linked to a task and a device, so that other users can benefit from my experience. | Must | midterm | #… |
-| 4 | As a user, I want to edit or delete my own submissions, so that I can correct outdated or incorrect information. | Must | midterm | #… |
-| 5 | As an admin, I want to approve or reject submitted alternatives, tasks, devices and compatibility information, so that visitors only see reliable content. | Must | final | #… |
-| 6 | As an admin, I want to manage users and their roles, so that access to administration features is controlled. | Must | final | #… |
-| 7 | As a user, I want to rate software alternatives, so that I can help others find the best alternatives. | Must | final | #… |
+| 1 | As a visitor, I want to search for approved software alternatives filtered by devices or tasks, so that I can find a solution compatible with my needs. | Must | midterm | #4 |
+| 2 | As a user, I want to create an account and log in, so that I can contribute content and ratings. | Must | midterm | #5 |
+| 3 | As a user, I want to submit a software alternative linked to a task and a device, so that other users can benefit from my experience. | Must | midterm | #6 |
+| 4 | As a user, I want to edit or delete my own submissions, so that I can correct outdated or incorrect information. | Must | midterm | #7 |
+| 5 | As an admin, I want to approve or reject submitted alternatives, tasks, devices and compatibility information, so that visitors only see reliable content. | Must | midterm | #8 |
+| 6 | As an admin, I want to manage users and their roles, so that access to administration features is controlled. | Must | midterm | #9 |
+| 7 | As a user, I want to rate software alternatives, so that I can help others find the best alternatives. | Must | midterm | #10 |
 | 8 | As a visitor, I want to view the details of an alternative, so that I can check its compatibility and limitations before using it. | Could | final | #… |
-| 9 | As a user, I want to filter alternatives by resource consumption, operating system or privacy features, so that I can refine my search. | Should | final | #… |
+| 9 | As a user, I want to filter alternatives by resource consumption, operating system or privacy features, so that I can refine my search. | Should | final | #12 |
 | 10 | As a user, I want to report outdated or misleading information, so that the platform can remain reliable. | Could | final | #… |
 | 11 | As a user, I want to receive notifications when an alternative is updated or my submission is moderated, so that I know when to take action. | Could | final | #… |
 | 12 | As a user, I want to scan my device model with my phone camera, so that I can find compatible alternatives without manually entering its details. | Could | final | #… |
@@ -122,4 +122,5 @@ The user can ask the agent to add a new software recommendation. The agent first
 | Final (week 12) | |
 
 ## Risks
-<!-- What could go wrong, and what will you do about it? -->
+
+We never used both of us none of Express, Prisma or React. We are also not used to use js for large project. It's a challenge and a we will have things and concept to learn but we are aware of that and that's also why we choose this stack.
