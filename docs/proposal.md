@@ -99,12 +99,6 @@ Create a GitHub issue for each story (use the "User story" issue template) and l
 - **When** the rating request is sent
 - **Then** the API rejects the request with a validation error and does not create a duplicate rating.
 
-### Won't this term
-
-- 
-- 
-- 
-- 
 
 ## Mobile app use case
 <!-- What will users do with the mobile app, and why on a phone? -->
