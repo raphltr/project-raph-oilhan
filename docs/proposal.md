@@ -27,12 +27,16 @@ Create a GitHub issue for each story (use the "User story" issue template) and l
 | 5 | As an admin, I want to approve or reject submitted alternatives, tasks, devices and compatibility information, so that visitors only see reliable content. | Must | midterm | #8 |
 | 6 | As an admin, I want to manage users and their roles, so that access to administration features is controlled. | Must | midterm | #9 |
 | 7 | As a user, I want to rate software alternatives, so that I can help others find the best alternatives. | Must | midterm | #10 |
-| 8 | As a visitor, I want to view the details of an alternative, so that I can check its compatibility and limitations before using it. | Could | final | #… |
-| 9 | As a user, I want to filter alternatives by resource consumption, operating system or privacy features, so that I can refine my search. | Should | final | #12 |
-| 10 | As a user, I want to report outdated or misleading information, so that the platform can remain reliable. | Could | final | #… |
-| 11 | As a user, I want to receive notifications when an alternative is updated or my submission is moderated, so that I know when to take action. | Could | final | #… |
-| 12 | As a user, I want to scan my device model with my phone camera, so that I can find compatible alternatives without manually entering its details. | Could | final | #… |
-| 13 | As a user, I want to compare two alternatives side by side, so that I can choose the most suitable one for my device and task. | Could | final | #… |
+| 8 | As a user, I want to filter alternatives by resource consumption, operating system or privacy features, so that I can refine my search. | Should | final | #12 |
+| 9 | As a visitor, I want to view the details of an alternative, so that I can check its compatibility and limitations before using it. | Could | final |  |
+| 10 | As a user, I want to report outdated or misleading information, so that the platform can remain reliable. | Could | final |  |
+| 11 | As a user, I want to receive notifications when an alternative is updated or my submission is moderated, so that I know when to take action. | Could | final |  |
+| 12 | As a user, I want to scan my device model with my phone camera, so that I can find compatible alternatives without manually entering its details. | Could | final |  |
+| 13 | As a user, I want to compare two alternatives side by side, so that I can choose the most suitable one for my device and task. | Could | final |  |
+| 14 | The platform will install software automatically on a user's device. | Won't |
+| 15 | The platform will replace a device's operating system or diagnose every hardware problem. | Won't |
+| 16 | The platform will guarantee the long-term security, maintenance or availability of third-party software. | Won't |
+| 17 | The platform will support every operating system and hardware configuration in the first version. | Won't |
 
 ### Acceptance criteria
 
@@ -97,10 +101,10 @@ Create a GitHub issue for each story (use the "User story" issue template) and l
 
 ### Won't this term
 
-- The platform will not install software automatically on a user's device.
-- The platform will not replace a device's operating system or diagnose every hardware problem.
-- The platform will not guarantee the long-term security, maintenance or availability of third-party software.
-- The platform will not support every operating system and hardware configuration in the first version.
+- 
+- 
+- 
+- 
 
 ## Mobile app use case
 <!-- What will users do with the mobile app, and why on a phone? -->
