@@ -116,8 +116,8 @@ The user can ask the agent to add a new software recommendation. The agent first
 ## Plan
 | Milestone | Stories / features |
 |-----------|--------------------|
-| Midterm (week 7) | |
-| Final (week 12) | |
+| Midterm (week 7) | 1-7 |
+| Final (week 12) | 8-13 |
 
 ## Risks
 
