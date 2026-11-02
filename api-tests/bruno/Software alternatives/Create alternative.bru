@@ -1,0 +1,35 @@
+meta {
+  name: Create alternative
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/software-alternatives
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "taskId": {{taskId}},
+    "name": "Bruno test alternative",
+    "description": "A software alternative created during API testing."
+  }
+}
+
+tests {
+  test("alternative creation returns 201", function() {
+    expect(res.status).to.equal(201);
+    expect(res.body.id).to.be.a("number");
+    expect(res.body.status).to.equal("pending");
+  });
+}

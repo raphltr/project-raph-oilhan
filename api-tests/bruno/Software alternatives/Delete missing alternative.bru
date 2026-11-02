@@ -1,0 +1,21 @@
+meta {
+  name: Delete missing alternative
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{baseUrl}}/api/software-alternatives/999999
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+tests {
+  test("delete missing alternative returns 404", function() {
+    expect(res.status).to.equal(404);
+  });
+}

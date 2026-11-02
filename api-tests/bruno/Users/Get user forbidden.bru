@@ -1,0 +1,21 @@
+meta {
+  name: Get user forbidden
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{baseUrl}}/api/users/{{otherUserId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+tests {
+  test("access to another user returns 403", function() {
+    expect(res.status).to.equal(403);
+  });
+}
