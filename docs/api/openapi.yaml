@@ -20,58 +20,168 @@ paths:
         "200":
           description: Service is healthy
 
-  # Example resource — replace with your own.
-  /api/items:
+  /api/auth/register:
+    post:
+      operationId: registerUser
+      summary: Register a user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UserCreate" }
+      responses:
+        "201":
+          description: User created
+          headers:
+            Location: { schema: { type: string, format: uri-reference } }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+        "400": { $ref: "#/components/responses/ValidationError" }
+        "409": { $ref: "#/components/responses/Conflict" }
+
+  /api/users:
     get:
-      operationId: listItems
-      summary: List items
+      operationId: listUsers
+      summary: List users
+      description: Administrator-only endpoint.
       parameters:
         - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
         - { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
       responses:
         "200":
-          description: A page of items
+          description: A page of users
           content:
             application/json:
-              schema: { $ref: "#/components/schemas/ItemPage" }
+              schema: { $ref: "#/components/schemas/UserPage" }
         "401": { $ref: "#/components/responses/Unauthorized" }
-    post:
-      operationId: createItem
-      summary: Create an item
+        "403": { $ref: "#/components/responses/Forbidden" }
+
+  /api/users/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: integer, minimum: 1 } }
+    get:
+      operationId: getUser
+      summary: Get a user
+      description: Users may retrieve their own profile; administrators may retrieve any profile.
+      responses:
+        "200":
+          description: The user profile
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      operationId: updateUser
+      summary: Update a user
+      description: Users may update their own email or password; administrators may update the role.
       requestBody:
         required: true
         content:
           application/json:
-            schema: { $ref: "#/components/schemas/ItemCreate" }
-      responses:
-        "201":
-          description: Created
-          headers:
-            Location: { schema: { type: string } }
-          content:
-            application/json:
-              schema: { $ref: "#/components/schemas/Item" }
-        "400": { $ref: "#/components/responses/ValidationError" }
-        "401": { $ref: "#/components/responses/Unauthorized" }
-
-  /api/items/{id}:
-    parameters:
-      - { name: id, in: path, required: true, schema: { type: integer } }
-    get:
-      operationId: getItem
-      summary: Get an item
+            schema: { $ref: "#/components/schemas/UserUpdate" }
       responses:
         "200":
-          description: The item
+          description: Updated user
           content:
             application/json:
-              schema: { $ref: "#/components/schemas/Item" }
+              schema: { $ref: "#/components/schemas/User" }
+        "400": { $ref: "#/components/responses/ValidationError" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+    delete:
+      operationId: deleteUser
+      summary: Delete a user
+      description: Users may delete their own account; administrators may delete any account.
+      responses:
+        "204": { description: User deleted }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /api/software-alternatives:
+    get:
+      operationId: listSoftwareAlternatives
+      summary: List software alternatives
+      description: Public users receive approved alternatives; authenticated users may see their own pending submissions.
+      security: []
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+        - { name: taskId, in: query, schema: { type: integer, minimum: 1 } }
+        - { name: status, in: query, schema: { $ref: "#/components/schemas/AlternativeStatus" } }
+      responses:
+        "200":
+          description: A page of software alternatives
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SoftwareAlternativePage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    post:
+      operationId: createSoftwareAlternative
+      summary: Submit a software alternative
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SoftwareAlternativeCreate" }
+      responses:
+        "201":
+          description: Alternative submitted for moderation
+          headers:
+            Location: { schema: { type: string, format: uri-reference } }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SoftwareAlternative" }
+        "400": { $ref: "#/components/responses/ValidationError" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /api/software-alternatives/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: integer, minimum: 1 } }
+    get:
+      operationId: getSoftwareAlternative
+      summary: Get a software alternative
+      security: []
+      responses:
+        "200":
+          description: The software alternative
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SoftwareAlternative" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      operationId: updateSoftwareAlternative
+      summary: Update a software alternative
+      description: Only the submitter may update a pending alternative; administrators may moderate it.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SoftwareAlternativeUpdate" }
+      responses:
+        "200":
+          description: Updated software alternative
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SoftwareAlternative" }
+        "400": { $ref: "#/components/responses/ValidationError" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
         "404": { $ref: "#/components/responses/NotFound" }
     delete:
-      operationId: deleteItem
-      summary: Delete an item
+      operationId: deleteSoftwareAlternative
+      summary: Delete a software alternative
+      description: Only the submitter may delete a pending alternative; administrators may delete any alternative.
       responses:
-        "204": { description: Deleted }
+        "204": { description: Software alternative deleted }
+        "401": { $ref: "#/components/responses/Unauthorized" }
         "403": { $ref: "#/components/responses/Forbidden" }
         "404": { $ref: "#/components/responses/NotFound" }
 
@@ -83,32 +193,85 @@ components:
       bearerFormat: JWT
 
   schemas:
-    Item:
+    User:
       type: object
-      required: [id, name]
+      required: [id, email, role, createdAt]
       properties:
-        id: { type: integer }
-        name: { type: string }
-    ItemCreate:
+        id: { type: integer, minimum: 1 }
+        email: { type: string, format: email, maxLength: 254 }
+        role: { $ref: "#/components/schemas/UserRole" }
+        createdAt: { type: string, format: date-time }
+    UserCreate:
       type: object
-      required: [name]
+      required: [email, password]
       properties:
-        name: { type: string, minLength: 1, maxLength: 100 }
-    ItemPage:
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
+    UserUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
+        role: { $ref: "#/components/schemas/UserRole" }
+    UserRole:
+      type: string
+      enum: [user, admin]
+    SoftwareAlternative:
+      type: object
+      required: [id, submittedBy, taskId, name, description, status, createdAt]
+      properties:
+        id: { type: integer, minimum: 1 }
+        submittedBy: { type: integer, minimum: 1 }
+        taskId: { type: integer, minimum: 1 }
+        name: { type: string, minLength: 1, maxLength: 150 }
+        description: { type: string, minLength: 1, maxLength: 5000 }
+        status: { $ref: "#/components/schemas/AlternativeStatus" }
+        moderationReason: { type: [string, "null"], maxLength: 1000 }
+        createdAt: { type: string, format: date-time }
+    SoftwareAlternativeCreate:
+      type: object
+      required: [taskId, name, description]
+      properties:
+        taskId: { type: integer, minimum: 1 }
+        name: { type: string, minLength: 1, maxLength: 150 }
+        description: { type: string, minLength: 1, maxLength: 5000 }
+    SoftwareAlternativeUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        taskId: { type: integer, minimum: 1 }
+        name: { type: string, minLength: 1, maxLength: 150 }
+        description: { type: string, minLength: 1, maxLength: 5000 }
+        status: { $ref: "#/components/schemas/AlternativeStatus" }
+        moderationReason: { type: [string, "null"], maxLength: 1000 }
+    AlternativeStatus:
+      type: string
+      enum: [pending, approved, rejected]
+    UserPage:
       type: object
       required: [items, total, page, pageSize]
       properties:
-        items: { type: array, items: { $ref: "#/components/schemas/Item" } }
-        total: { type: integer }
-        page: { type: integer }
-        pageSize: { type: integer }
+        items: { type: array, items: { $ref: "#/components/schemas/User" } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
+    SoftwareAlternativePage:
+      type: object
+      required: [items, total, page, pageSize]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/SoftwareAlternative" } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
     ProblemDetails:
       type: object
       description: RFC 9457 Problem Details
+      required: [type, title, status]
       properties:
-        type: { type: string }
+        type: { type: string, format: uri-reference }
         title: { type: string }
-        status: { type: integer }
+        status: { type: integer, minimum: 100, maximum: 599 }
         detail: { type: string }
         errors:
           type: object
@@ -134,6 +297,11 @@ components:
           schema: { $ref: "#/components/schemas/ProblemDetails" }
     NotFound:
       description: Resource not found
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/ProblemDetails" }
+    Conflict:
+      description: Resource conflicts with existing data
       content:
         application/problem+json:
           schema: { $ref: "#/components/schemas/ProblemDetails" }
