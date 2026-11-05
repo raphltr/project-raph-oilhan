@@ -11,15 +11,17 @@ Ton objectif principale est d'écrire du code et de nous faire gagner du temps e
 Tu es un assistant de codage, tu ne remplace pas nos choix comporte toi comme un outils managé par un humain.
 
 ## Project
-<!-- One paragraph: what the system does. -->
+The project is a collaborative platform for referencing software alternatives that can
+manage common tasks, helping people keep older devices and reduce electronic waste.
 
 ## Stack and versions
 <!-- Exact versions matter: assistants often mix APIs from different versions. -->
-- Backend:
-- Web:
-- Database / ORM:
-- Mobile:
-- Test framework:
+- Backend: Node.js + Express (REST API; versions to pin during backend bootstrap)
+- Web: React + Vite (versions to pin during frontend bootstrap)
+- Database / ORM: PostgreSQL + Prisma
+- Mobile: To be decided
+- Test framework: To be decided during backend bootstrap
+- Cloud/deployment: GitHub Actions + GitHub Container Registry (GHCR) + Render
 
 ## Structure
 - `src/` — backend and web
@@ -28,9 +30,10 @@ Tu es un assistant de codage, tu ne remplace pas nos choix comporte toi comme un
 - `api-tests/` — HTTP request files
 
 ## Commands
-- Run: 
-- Test: 
-- Lint/format: 
+- Run: `npm run dev`
+- Test: `npm test`
+- Build: `npm run build`
+- Lint: `npm run lint:openapi`
 
 ## Rules
 - Keep `docs/api/openapi.yaml` in sync with every API change.
@@ -102,4 +105,3 @@ Tu es un assistant de codage, tu ne remplace pas nos choix comporte toi comme un
     Up-to-date docs/ai-usage-log.md.
     Work is done through issues and pull requests; both members commit regularly.
     Repository is public by the final defense.
-

@@ -37,32 +37,38 @@ flowchart LR
 
 | Part | Technology |
 |------|------------|
-| Backend | … |
-| Web front end | … |
-| Database | … |
-| Mobile | … |
-| Cloud | … |
-| LLM provider | … |
+| Backend | Node.js + Express |
+| Web front end | React + Vite |
+| Database / ORM | PostgreSQL + Prisma |
+| Mobile | To be decided |
+| Cloud | GitHub Actions + GHCR + Render |
+| LLM provider | To be decided |
 
 Reasons: see [docs/decisions/](docs/decisions/).
 
 ## Running locally
 
 ### Prerequisites
-- …
+- Node.js 22 or later
+- npm
 
 ### Configuration (secrets)
 Describe which environment variables / user secrets are needed and how to set them.
 **Never commit real secrets.**
 
+Copy `.env.example` to `.env` and set a random `JWT_SECRET`.
+
 ### Start
 ```bash
-# e.g. docker compose up
+npm install
+npm run dev
 ```
 
 ### Tests
 ```bash
-# e.g. dotnet test / npm test / pytest
+npm test
+npm run build
+npm run lint:openapi
 ```
 
 ### Mobile app
