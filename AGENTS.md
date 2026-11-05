@@ -31,7 +31,7 @@ manage common tasks, helping people keep older devices and reduce electronic was
 
 ## Commands
 - Run: `npm run dev`
-- Test: `npm test`
+- API tests: Bruno collection in `api-tests/bruno/`
 - Build: `npm run build`
 - Lint: `npm run lint:openapi`
 

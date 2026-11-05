@@ -66,10 +66,14 @@ npm run dev
 
 ### Tests
 ```bash
-npm test
 npm run build
 npm run lint:openapi
 ```
+
+Les tests fonctionnels de l'API sont réalisés avec Bruno. Ouvrir la collection
+[api-tests/bruno](api-tests/bruno) dans Bruno, sélectionner l'environnement
+`local`, puis exécuter les requêtes. Les tokens JWT sont renseignés dans
+[local.bru](api-tests/bruno/environments/local.bru).
 
 ### Mobile app
 How to build and run it, and how to point it to a local or production API.
