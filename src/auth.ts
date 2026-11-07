@@ -44,3 +44,16 @@ export function requireAuth(
     return next(new HttpError(401, "Unauthorized", "A valid bearer token is required."));
   }
 }
+
+export function optionalAuth(
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) {
+  // Public requests may see approved alternatives; a token is needed for private pending ones.
+  if (!request.header("authorization")) {
+    return next();
+  }
+
+  return requireAuth(request, response, next);
+}

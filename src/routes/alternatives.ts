@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { z } from "zod";
-import { requireAuth } from "../auth.js";
+import { optionalAuth, requireAuth } from "../auth.js";
 import { HttpError } from "../errors.js";
 import {
   alternativeCreateSchema,
@@ -19,7 +19,8 @@ import { paginate } from "../utils/pagination.js";
 
 export const alternativesRouter = Router();
 
-alternativesRouter.get("/", (request, response) => {
+// Keep the collection public while identifying authenticated owners for pending alternatives.
+alternativesRouter.get("/", optionalAuth, (request, response) => {
   const { page, pageSize } = parse(paginationSchema, request.query);
   const taskId = request.query.taskId === undefined
     ? undefined

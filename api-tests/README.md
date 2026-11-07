@@ -9,9 +9,9 @@ open the collection directly in Bruno; do not copy them elsewhere.
 1. Start the API locally on `http://localhost:8080`.
 2. In Bruno, choose **Open Collection** and select `api-tests/bruno/`.
 3. Select the `local` environment.
-4. Put a normal-user JWT in `userToken` and an administrator JWT in
-   `adminToken`. adminToken is used only for testing Listusers. We can't use adminToken everywhere otherwise the Get user forbidden would work.
-5. Open a request and click **Send**, or run a whole folder.
+4. Use the authentification (/api/auth/login) endpoint for getting the JWT of the admin ("admin@example.com", "AdminPassword123!") and the normal user ("user@example.com", "UserPassword123!")
+5. In local.bru : put the user JWT in `userToken` and the admin JWT in `adminToken`. 
+6. Right click on the collecion then click on run
 
 The collection covers:
 
@@ -36,9 +36,12 @@ Update these IDs to match your local database:
 - `otherUserId`: another user, used for the `403` test
 - `deletableUserId`: a disposable user, used by the `204` delete test
 - `alternativeId`: an alternative owned by `userId`
-- `otherAlternativeId`: another user's alternative, used for the `403` test
+- `pendingAlternativeId`: another user's alternative, that can be modified
 - `deletableAlternativeId`: a disposable alternative, used by the `204` delete test
+- `otherUserAlternativeId` : use for `403`, modify an alternative that is not yours
 - `taskId`: an existing task
 
 Run delete tests last because they permanently remove their target resources.
 Do not commit real passwords, tokens or API keys.
+
+Note : AdminToken is used only for testing List users. We can't use adminToken everywhere otherwise the Get user forbidden would work.

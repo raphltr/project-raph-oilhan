@@ -1,6 +1,8 @@
 
 // This file is only here to provide a simple in-memory store for the application before implementing the real database.
 
+// Be careful when modifying the entities : they are linked (by their id) with the test in api-tests/bruno
+
 import bcrypt from "bcryptjs";
 import type { AlternativeStatus, SoftwareAlternative, Task, User, UserRole } from "./types.js";
 
@@ -33,8 +35,14 @@ export function publicUser(user: User) {
 
 export async function seedStore() {
   if (users.length === 0) {
+    // adminId = 1
     const admin = await createUser("admin@example.com", "AdminPassword123!", "admin");
+    // userId = 2
     const user = await createUser("user@example.com", "UserPassword123!");
+    // otherUserId = 3
+    const otherUser = await createUser("other-user@example.com", "OtherUserPassword123!");
+    const deleteUser = await createUser("await-user@example.com", "AwaitUserPassword123!");
+    
     alternatives.push({
       id: nextAlternativeId++,
       submittedBy: user.id,
@@ -45,6 +53,40 @@ export async function seedStore() {
       moderationReason: null,
       createdAt: new Date().toISOString(),
     });
+
+    alternatives.push({
+      id: nextAlternativeId++,
+      submittedBy: user.id,
+      taskId: 1,
+      name: "Pending alternative",
+      description: "An alternative owned by the user in pending mode : can be modified",
+      status: "pending",
+      moderationReason: null,
+      createdAt: new Date().toISOString(),
+    });
+
+    alternatives.push({
+      id: nextAlternativeId++,
+      submittedBy: user.id,
+      taskId: 2,
+      name: "Deletable pending alternative",
+      description: "A pending alternative reserved for deletion tests.",
+      status: "pending",
+      moderationReason: null,
+      createdAt: new Date().toISOString(),
+    });
+
+    alternatives.push({
+      id: nextAlternativeId++,
+      submittedBy: otherUser.id,
+      taskId: 2,
+      name: "Other user Alternative ID",
+      description: "A pending alternative reserved for deletion tests.",
+      status: "approved",
+      moderationReason: null,
+      createdAt: new Date().toISOString(),
+    });
+
     void admin;
   }
 }

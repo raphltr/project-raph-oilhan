@@ -19,11 +19,11 @@ usersRouter.get("/", (request, response) => {
 usersRouter.get("/:id", (request, response) => {
   const actor = currentUser(request);
   const id = parse(idSchema, request.params.id);
+  const target = findUser(id);
+  if (!target) throw new HttpError(404, "Not Found", "User was not found.");
   if (actor.role !== "admin" && actor.id !== id) {
     throw new HttpError(403, "Forbidden", "You can only access your own profile.");
   }
-  const target = findUser(id);
-  if (!target) throw new HttpError(404, "Not Found", "User was not found.");
   response.json(publicUser(target));
 });
 
