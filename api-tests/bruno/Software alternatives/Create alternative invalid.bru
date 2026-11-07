@@ -1,0 +1,33 @@
+meta {
+  name: Create alternative invalid
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/software-alternatives
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "taskId": 0,
+    "name": "",
+    "description": ""
+  }
+}
+
+tests {
+  test("invalid alternative creation returns 400", function() {
+    expect(res.status).to.equal(400);
+  });
+}

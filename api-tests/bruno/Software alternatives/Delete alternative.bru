@@ -1,0 +1,21 @@
+meta {
+  name: Delete alternative
+  type: http
+  seq: 12
+}
+
+delete {
+  url: {{baseUrl}}/api/software-alternatives/{{deletableAlternativeId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+tests {
+  test("alternative deletion returns 204", function() {
+    expect(res.status).to.equal(204);
+  });
+}

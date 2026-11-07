@@ -1,0 +1,31 @@
+meta {
+  name: Update invalid user
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{baseUrl}}/api/users/{{userId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "not-an-email"
+  }
+}
+
+tests {
+  test("invalid user update returns 400", function() {
+    expect(res.status).to.equal(400);
+  });
+}

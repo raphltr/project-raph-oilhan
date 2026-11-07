@@ -1,12 +1,44 @@
 # API tests
 
-Put `.http` files (VS Code REST Client / JetBrains HTTP Client), a Postman or Bruno collection
-here. Cover every endpoint, including error cases (`400`, `401`, `403`, `404`, `409`).
+The Bruno collection is stored in [`bruno/`](./bruno/). Each `.bru` file is
+one HTTP request and its assertions. Commit these files with the project and
+open the collection directly in Bruno; do not copy them elsewhere.
 
-```http
-@baseUrl = http://localhost:8080
-@token = <paste a token for local testing — never commit a real one>
+## Run the collection
 
-GET {{baseUrl}}/api/items
-Authorization: Bearer {{token}}
-```
+1. Start the API locally on `http://localhost:8080`.
+2. In Bruno, choose **Open Collection** and select `api-tests/bruno/`.
+3. Select the `local` environment.
+4. Put a normal-user JWT in `userToken` and an administrator JWT in
+   `adminToken`. adminToken is used only for testing Listusers. We can't use adminToken everywhere otherwise the Get user forbidden would work.
+5. Open a request and click **Send**, or run a whole folder.
+
+The collection covers:
+
+- `GET /health`
+- User registration: success, validation (`400`) and duplicate (`409`)
+- User list: success, unauthenticated (`401`) and forbidden (`403`)
+- User read/update/delete: success, validation, forbidden and not found (`404`)
+- Software-alternative list: success and invalid pagination (`400`)
+- Software-alternative create: success, validation and unauthenticated (`401`)
+- Software-alternative read/update/delete: success, validation, forbidden and not found (`404`)
+
+## Environment variables
+
+The local environment is defined in
+[`bruno/environments/local.bru`](./bruno/environments/local.bru).
+
+Update these IDs to match your local database:
+
+- `userToken`: a normal user token, used for ownership and `403` tests
+- `adminToken`: an administrator token, used for administrator-only requests
+- `userId`: the user represented by `userToken`
+- `otherUserId`: another user, used for the `403` test
+- `deletableUserId`: a disposable user, used by the `204` delete test
+- `alternativeId`: an alternative owned by `userId`
+- `otherAlternativeId`: another user's alternative, used for the `403` test
+- `deletableAlternativeId`: a disposable alternative, used by the `204` delete test
+- `taskId`: an existing task
+
+Run delete tests last because they permanently remove their target resources.
+Do not commit real passwords, tokens or API keys.

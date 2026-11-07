@@ -1,0 +1,29 @@
+meta {
+  name: Create alternative unauthorized
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/software-alternatives
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "taskId": 1,
+    "name": "Unauthorized alternative",
+    "description": "This request must be rejected."
+  }
+}
+
+tests {
+  test("alternative creation without authentication returns 401", function() {
+    expect(res.status).to.equal(401);
+  });
+}
