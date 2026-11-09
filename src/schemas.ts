@@ -1,14 +1,10 @@
-//Validate the entrance data for the API endpoints using Zod schemas. This file defines the validation rules for user registration, login, user updates, and alternative creation and updates.
+// Validate request data for user updates and software-alternative operations.
 
 import { z } from "zod";
 
 const email = z.string().email().max(254).transform((value) => value.toLowerCase());
-const password = z.string().min(8).max(128);
-
-export const registerSchema = z.object({ email, password }).strict();
-export const loginSchema = registerSchema;
 export const userUpdateSchema = z
-  .object({ email, password, role: z.enum(["user", "admin"]) })
+  .object({ email, role: z.enum(["user", "admin"]) })
   .partial()
   .strict()
   .refine((value) => Object.keys(value).length > 0, "At least one property is required");
@@ -39,8 +35,6 @@ export const paginationSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(100).default(20),
 });
 
-export type RegisterDto = z.infer<typeof registerSchema>;
-export type LoginDto = z.infer<typeof loginSchema>;
 export type UserUpdateDto = z.infer<typeof userUpdateSchema>;
 export type AlternativeCreateDto = z.infer<typeof alternativeCreateSchema>;
 export type AlternativeUpdateDto = z.infer<typeof alternativeUpdateSchema>;

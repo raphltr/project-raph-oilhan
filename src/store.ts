@@ -3,7 +3,6 @@
 
 // Be careful when modifying the entities : they are linked (by their id) with the test in api-tests/bruno
 
-import bcrypt from "bcryptjs";
 import type { AlternativeStatus, SoftwareAlternative, Task, User, UserRole } from "./types.js";
 
 export const users: User[] = [];
@@ -16,11 +15,15 @@ export const alternatives: SoftwareAlternative[] = [];
 let nextUserId = 1;
 let nextAlternativeId = 1;
 
-export async function createUser(email: string, password: string, role: UserRole = "user") {
+export function createUser(
+  email: string,
+  role: UserRole = "user",
+  keycloakSubject?: string,
+) {
   const user: User = {
     id: nextUserId++,
+    keycloakSubject,
     email,
-    passwordHash: await bcrypt.hash(password, 12),
     role,
     createdAt: new Date().toISOString(),
   };
@@ -29,19 +32,19 @@ export async function createUser(email: string, password: string, role: UserRole
 }
 
 export function publicUser(user: User) {
-  const { passwordHash: _passwordHash, ...safeUser } = user;
+  const { keycloakSubject: _keycloakSubject, ...safeUser } = user;
   return safeUser;
 }
 
 export async function seedStore() {
   if (users.length === 0) {
     // adminId = 1
-    const admin = await createUser("admin@example.com", "AdminPassword123!", "admin");
+    const admin = createUser("admin@example.com", "admin");
     // userId = 2
-    const user = await createUser("user@example.com", "UserPassword123!");
+    const user = createUser("user@example.com");
     // otherUserId = 3
-    const otherUser = await createUser("other-user@example.com", "OtherUserPassword123!");
-    const deleteUser = await createUser("await-user@example.com", "AwaitUserPassword123!");
+    const otherUser = createUser("other-user@example.com");
+    const deleteUser = createUser("await-user@example.com");
     
     alternatives.push({
       id: nextAlternativeId++,
@@ -93,6 +96,10 @@ export async function seedStore() {
 
 export function findUserByEmail(email: string) {
   return users.find((user) => user.email === email);
+}
+
+export function findUserByKeycloakSubject(subject: string) {
+  return users.find((user) => user.keycloakSubject === subject);
 }
 
 export function findUser(id: number) {

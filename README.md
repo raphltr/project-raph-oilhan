@@ -56,7 +56,9 @@ Reasons: see [docs/decisions/](docs/decisions/).
 Describe which environment variables / user secrets are needed and how to set them.
 **Never commit real secrets.**
 
-Copy `.env.example` to `.env` and set a random `JWT_SECRET`.
+Copy `.env.example` to `.env` and set local values. The Keycloak administrator
+password is used only to start the local Keycloak container and must not be
+committed.
 
 ### Start
 ```bash
@@ -64,16 +66,26 @@ npm install
 npm run dev
 ```
 
+### Local Keycloak
+
+Start the local OIDC provider with Docker Compose:
+
+```bash
+docker compose up -d keycloak
+```
+
+Keycloak is available at `http://localhost:8081`. The named
+`keycloak-data` volume preserves the realm configuration between restarts.
+Create the `.env` file first, the client and roles will be charched by themselves from realm-export.json.
+You need to create the users by yourself for testing.
+
 ### Tests
 ```bash
 npm run build
 npm run lint:openapi
 ```
 
-Les tests fonctionnels de l'API sont réalisés avec Bruno. Ouvrir la collection
-[api-tests/bruno](api-tests/bruno) dans Bruno, sélectionner l'environnement
-`local`, puis exécuter les requêtes. Les tokens JWT sont renseignés dans
-[local.bru](api-tests/bruno/environments/local.bru).
+Tests are done in the api-test folder. Read the Readme there to know more about it
 
 ### Mobile app
 How to build and run it, and how to point it to a local or production API.

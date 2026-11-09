@@ -51,7 +51,7 @@ flowchart TD
 
 ### Application layer
 
-- Contains the use-case services for registration, login, searching approved
+- Contains the use-case services for searching approved
   alternatives, submitting content, editing or deleting owned pending submissions,
   ratings, moderation and user-role management.
 - Enforces authorization in the service boundary, including both role checks and
@@ -73,10 +73,10 @@ flowchart TD
 
 ## Authentication & authorization
 
-Users authenticate with email and password. The API returns a short-lived JWT
-bearer token; clients send it in the `Authorization` header over HTTPS. Passwords
-are stored only as secure hashes, and JWT secrets are provided through the
-environment.
+Users authenticate with Keycloak using OpenID Connect. Keycloak returns a
+short-lived JWT bearer token; clients send it in the `Authorization` header over
+HTTPS. The API validates the token using Keycloak's public JWKS and never stores
+passwords.
 
 There are two roles:
 

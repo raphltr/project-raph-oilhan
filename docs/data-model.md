@@ -16,7 +16,7 @@ erDiagram
     USER {
         int id PK
         string email UK
-        string passwordHash
+        string keycloakSubject UK
         string role
         datetime createdAt
     }

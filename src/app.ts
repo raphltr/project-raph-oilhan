@@ -5,9 +5,12 @@ import express, { type NextFunction, type Request, type Response } from "express
 import cors from "cors";
 import { HttpError, problemDetails } from "./errors.js";
 import { seedStore } from "./store.js";
-import { authRouter } from "./routes/auth.js";
 import { usersRouter } from "./routes/users.js";
 import { alternativesRouter } from "./routes/alternatives.js";
+
+if (!process.env.KEYCLOAK_ISSUER_URL) {
+  throw new Error("KEYCLOAK_ISSUER_URL must be configured.");
+}
 
 await seedStore(); // Peuple la base de données avec un utilisateur admin et un utilisateur normal, ainsi qu'une alternative logicielle pour le test.
 
@@ -16,7 +19,6 @@ app.use(cors({ origin: true })); // A modifier lorsque l'on aura un frontend pou
 app.use(express.json({ limit: "1mb" }));
 
 app.get("/health", (_request, response) => response.status(200).json({ status: "ok" }));
-app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/software-alternatives", alternativesRouter);
 

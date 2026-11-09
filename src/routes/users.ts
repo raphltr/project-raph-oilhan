@@ -1,5 +1,4 @@
 import { Router } from "express";
-import bcrypt from "bcryptjs";
 import { requireAuth } from "../auth.js";
 import { HttpError } from "../errors.js";
 import { idSchema, paginationSchema, userUpdateSchema } from "../schemas.js";
@@ -43,7 +42,6 @@ usersRouter.patch("/:id", async (request, response) => {
     throw new HttpError(409, "Conflict", "Email is already registered.");
   }
   if (dto.email) target.email = dto.email;
-  if (dto.password) target.passwordHash = await bcrypt.hash(dto.password, 12);
   if (dto.role) target.role = dto.role;
   response.json(publicUser(target));
 });

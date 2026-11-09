@@ -1,0 +1,30 @@
+meta {
+  name: Get admin token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{keycloakUrl}}/realms/{{keycloakRealm}}/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+headers {
+  Content-Type: application/x-www-form-urlencoded
+}
+
+body:form-urlencoded {
+  client_id: {{keycloakClientId}}
+  username: {{keycloakAdminUsername}}
+  password: {{keycloakAdminPassword}}
+  grant_type: password
+}
+
+tests {
+  test("Keycloak returns an admin access token", function() {
+    expect(res.status).to.equal(200);
+    expect(res.body.access_token).to.be.a("string");
+    expect(res.body.token_type).to.equal("Bearer");
+  });
+}

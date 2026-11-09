@@ -5,8 +5,8 @@ export type AlternativeStatus = "pending" | "approved" | "rejected";
 
 export interface User {
   id: number;
+  keycloakSubject?: string;
   email: string;
-  passwordHash: string;
   role: UserRole;
   createdAt: string;
 }

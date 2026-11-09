@@ -7,16 +7,18 @@ open the collection directly in Bruno; do not copy them elsewhere.
 ## Run the collection
 
 1. Start the API locally on `http://localhost:8080`.
-2. In Bruno, choose **Open Collection** and select `api-tests/bruno/`.
-3. Select the `local` environment.
-4. Use the authentification (/api/auth/login) endpoint for getting the JWT of the admin ("admin@example.com", "AdminPassword123!") and the normal user ("user@example.com", "UserPassword123!")
-5. In local.bru : put the user JWT in `userToken` and the admin JWT in `adminToken`. 
-6. Right click on the collecion then click on run
+2. Start the Keycloak and create the users : user1, UserPassword123! and admin, AdminPassword123!
+3. In Bruno, choose **Open Collection** and select `api-tests/bruno/`.
+4. Select the `local` environment.
+5. Set the local Keycloak credentials in `bruno/environments/local.bru`.
+6. Run `Authentication/Get user token` and `Authentication/Get admin token`.
+7. Copy each `access_token` response into `userToken` and `adminToken` in `local.bru`.
+8. Right click on the collection then click on run.
 
 The collection covers:
 
 - `GET /health`
-- User registration: success, validation (`400`) and duplicate (`409`)
+- Authentication is provided by Keycloak, outside this API collection.
 - User list: success, unauthenticated (`401`) and forbidden (`403`)
 - User read/update/delete: success, validation, forbidden and not found (`404`)
 - Software-alternative list: success and invalid pagination (`400`)

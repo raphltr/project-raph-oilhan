@@ -20,51 +20,6 @@ paths:
         "200":
           description: Service is healthy
 
-  /api/auth/register:
-    post:
-      operationId: registerUser
-      summary: Register a user
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema: { $ref: "#/components/schemas/UserCreate" }
-      responses:
-        "201":
-          description: User created
-          headers:
-            Location: { schema: { type: string, format: uri-reference } }
-          content:
-            application/json:
-              schema: { $ref: "#/components/schemas/User" }
-        "400": { $ref: "#/components/responses/ValidationError" }
-        "409": { $ref: "#/components/responses/Conflict" }
-
-  /api/auth/login:
-    post:
-      operationId: loginUser
-      summary: Authenticate a user
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema: { $ref: "#/components/schemas/UserLogin" }
-      responses:
-        "200":
-          description: Authenticated user and bearer token
-          content:
-            application/json:
-              schema:
-                type: object
-                required: [token, user]
-                properties:
-                  token: { type: string }
-                  user: { $ref: "#/components/schemas/User" }
-        "400": { $ref: "#/components/responses/ValidationError" }
-        "401": { $ref: "#/components/responses/Unauthorized" }
-
   /api/users:
     get:
       operationId: listUsers
@@ -225,24 +180,11 @@ components:
         email: { type: string, format: email, maxLength: 254 }
         role: { $ref: "#/components/schemas/UserRole" }
         createdAt: { type: string, format: date-time }
-    UserCreate:
-      type: object
-      required: [email, password]
-      properties:
-        email: { type: string, format: email, maxLength: 254 }
-        password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
-    UserLogin:
-      type: object
-      required: [email, password]
-      properties:
-        email: { type: string, format: email, maxLength: 254 }
-        password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
     UserUpdate:
       type: object
       minProperties: 1
       properties:
         email: { type: string, format: email, maxLength: 254 }
-        password: { type: string, minLength: 8, maxLength: 128, writeOnly: true }
         role: { $ref: "#/components/schemas/UserRole" }
     UserRole:
       type: string
