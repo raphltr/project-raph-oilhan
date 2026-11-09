@@ -1,0 +1,21 @@
+meta {
+  name: Delete missing user
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{baseUrl}}/api/users/999999
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+tests {
+  test("delete missing user returns 404", function() {
+    expect(res.status).to.equal(404);
+  });
+}

@@ -11,15 +11,17 @@ Ton objectif principale est d'écrire du code et de nous faire gagner du temps e
 Tu es un assistant de codage, tu ne remplace pas nos choix comporte toi comme un outils managé par un humain.
 
 ## Project
-<!-- One paragraph: what the system does. -->
+The project is a collaborative platform for referencing software alternatives that can
+manage common tasks, helping people keep older devices and reduce electronic waste.
 
 ## Stack and versions
 <!-- Exact versions matter: assistants often mix APIs from different versions. -->
-- Backend:
-- Web:
-- Database / ORM:
-- Mobile:
-- Test framework:
+- Backend: Node.js + Express (REST API; versions to pin during backend bootstrap)
+- Web: React + Vite (versions to pin during frontend bootstrap)
+- Database / ORM: PostgreSQL + Prisma
+- Mobile: To be decided
+- Test framework: To be decided during backend bootstrap
+- Cloud/deployment: GitHub Actions + GitHub Container Registry (GHCR) + Render
 
 ## Structure
 - `src/` — backend and web
@@ -28,9 +30,10 @@ Tu es un assistant de codage, tu ne remplace pas nos choix comporte toi comme un
 - `api-tests/` — HTTP request files
 
 ## Commands
-- Run: 
-- Test: 
-- Lint/format: 
+- Run: `npm run dev`
+- API tests: Bruno collection in `api-tests/bruno/`
+- Build: `npm run build`
+- Lint: `npm run lint:openapi`
 
 ## Rules
 - Keep `docs/api/openapi.yaml` in sync with every API change.
@@ -40,3 +43,65 @@ Tu es un assistant de codage, tu ne remplace pas nos choix comporte toi comme un
 - Never hard-code secrets; read configuration from the environment.
 - Add or update tests for every behaviour change; never weaken a test to make it pass.
 - Use schema changes only through migrations.
+
+
+## Requirements
+1. Data & backend
+
+    Relational or document database with a documented data model (diagram in docs/).
+    Schema changes are managed by migrations (or an equivalent, versioned mechanism).
+    Seed data so a fresh environment is usable immediately.
+
+2. REST API
+
+    OpenAPI specification in docs/api/openapi.yaml (written or generated, but kept accurate).
+    Full CRUD for at least 2 entities; correct HTTP methods and status codes.
+    Input validation with consistent, structured error responses.
+    Pagination on at least one collection endpoint.
+
+3. Web application
+
+    Web UI covering the main use cases for both roles.
+    Works with the API (directly, or sharing the same backend services).
+
+4. Security
+
+    Authentication (sessions, JWT, or an external OIDC provider).
+    Authorization: at least 2 roles, enforced on the server.
+    No secrets in the repository. Secrets are provided by environment or a secret store.
+    HTTPS in production; CORS configured deliberately (no * with credentials).
+
+5. Quality
+
+    Automated tests: unit tests for business logic and at least 3 API integration tests.
+    CI pipeline (GitHub Actions) builds and tests every pull request.
+    Backend (at least) runs in a container (Dockerfile, optionally docker-compose.yml).
+
+6. Cloud deployment
+
+    API and web app deployed to a public cloud and reachable via a public URL.
+    Managed (cloud) database in production.
+    Deployment is automated from main (CD).
+    Logs are accessible; there is a health check endpoint.
+
+7. Mobile app
+
+    Native or cross-platform app (Android, iOS, Flutter, React Native, MAUI, …).
+    Logs in against your API and stores the token securely.
+    Lists, creates and edits at least one entity through the deployed API.
+    Handles loading, errors and no-network state gracefully.
+
+8. AI
+
+    At least one LLM-powered feature with structured (validated) output.
+    An agent that uses your API through tools (function calling or an MCP server) to complete a multi-step task for the user.
+    Guardrails: the agent acts only with the user's permissions; destructive actions need confirmation.
+    API keys for the LLM provider are never shipped in the mobile or web client.
+
+9. Documentation & process
+
+    README.md with: description, architecture diagram, live URLs, how to run locally.
+    At least 4 decision records in docs/decisions/.
+    Up-to-date docs/ai-usage-log.md.
+    Work is done through issues and pull requests; both members commit regularly.
+    Repository is public by the final defense.

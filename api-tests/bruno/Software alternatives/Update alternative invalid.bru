@@ -1,0 +1,31 @@
+meta {
+  name: Update alternative invalid
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{baseUrl}}/api/software-alternatives/{{alternativeId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{userToken}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": ""
+  }
+}
+
+tests {
+  test("invalid alternative update returns 400", function() {
+    expect(res.status).to.equal(400);
+  });
+}

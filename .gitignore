@@ -14,3 +14,7 @@ Thumbs.db
 !.vscode/extensions.json
 
 # Add your stack's build output below (bin/, obj/, node_modules/, __pycache__/, build/, …)
+node_modules/
+dist/
+
+local.bru

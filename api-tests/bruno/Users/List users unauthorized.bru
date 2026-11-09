@@ -1,0 +1,17 @@
+meta {
+  name: List users unauthorized
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/api/users?page=1&pageSize=20
+  body: none
+  auth: none
+}
+
+tests {
+  test("user list without authentication returns 401", function() {
+    expect(res.status).to.equal(401);
+  });
+}
