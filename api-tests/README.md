@@ -7,7 +7,7 @@ open the collection directly in Bruno; do not copy them elsewhere.
 ## Run the collection
 
 1. Start the API locally on `http://localhost:8080`.
-2. Start the Keycloak and create the users : user1, UserPassword123! and admin, AdminPassword123!
+2. Start the Keycloak and create the users : user1, UserPassword123! and admin, AdminPassword123! and put all the other information (name, email,etc)
 3. In Bruno, choose **Open Collection** and select `api-tests/bruno/`.
 4. Select the `local` environment.
 5. Set the local Keycloak credentials in `bruno/environments/local.bru`.
